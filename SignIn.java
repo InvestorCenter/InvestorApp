@@ -2,12 +2,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class SignIn extends JFrame implements ActionListener {
-    private JLabel titleLabel, usernameLabel, passwordLabel, titlePromptLabel;
+public class SignIn extends JFrame  {
+    private JLabel titleLabel, usernameLabel, passwordLabel;
     private JTextField usernameField;
     private JPasswordField passwordField;
-    private JButton signUpButton;
+    private JButton signInButton;
     private JButton createAccount;
+    private static Auth authorization = new Auth();
 
     public SignIn() {
         setTitle("Investor Center");
@@ -23,9 +24,7 @@ public class SignIn extends JFrame implements ActionListener {
         titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
         titleLabel.setBounds(250, 10, 100, 30);
 
-        titlePromptLabel = new JLabel("Click 'enter' to enter input");
-        titlePromptLabel.setFont(new Font("Arial", Font.PLAIN ,10));
-        titlePromptLabel.setBounds(235, 30, 125, 50);
+      
 
         //username and password indicators
         usernameLabel = new JLabel("Username:");
@@ -37,52 +36,53 @@ public class SignIn extends JFrame implements ActionListener {
         usernameField = new JTextField();
         usernameField.setBounds(200,90, 200, 30);
         usernameField.setBorder(BorderFactory.createLineBorder(Color.black));
-        usernameField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                
-                System.out.println(username);
-            }
-        });
 
 
         //password text field
         passwordField = new JPasswordField();
         passwordField.setBounds(200, 130, 200, 30);
         passwordField.setBorder(BorderFactory.createLineBorder(Color.black));
-        passwordField.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                char[] password = passwordField.getPassword();
-                
-                System.out.println(password);
-            }
-        });
+        
 
         //sign in button
-        signUpButton = new JButton("Sign in");
-        signUpButton.setBounds(235, 200, 100, 30);
+        signInButton = new JButton("Sign in");
+        signInButton.setBounds(235, 200, 100, 30);
+        signInButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                boolean check = authorization.CheckUser(usernameField.getText(), passwordField.getText());
+                if (check){
+                    System.out.println("user has account");
+                    setVisible(false);
+                    Survey survey = new Survey();
+                    survey.setVisible(true);
+                    
+                }
+                else{
+                    System.out.println("Invalid credentials");
+                }
+            }});
 
         //create account option if user doesnt have account
         createAccount = new JButton ("CREATE ACCOUNT");
         createAccount.setBounds(215, 240, 150, 30);
-        createAccount.addActionListener(this);
         createAccount.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(ActionEvent e) {
                 // Open SignUp window when "CREATE ACCOUNT" button is clicked
                 SignUp signUp = new SignUp();
                 signUp.signUpMethod();
                 setVisible(false);
+                
+
             }
         });
 
         add(titleLabel);
-        add(titlePromptLabel);
+        
         add(usernameLabel);
         add(passwordLabel);
         add(usernameField);
         add(passwordField);
-        add(signUpButton);
+        add(signInButton);
         add(createAccount);
 
 
@@ -90,10 +90,5 @@ public class SignIn extends JFrame implements ActionListener {
 
 
 
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        
     }
 }

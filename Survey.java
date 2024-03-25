@@ -18,8 +18,20 @@ public class Survey extends JFrame implements ActionListener {
     // of Container class.
     Container c;
 
-    Survey()
+    public Survey()
     {
+
+        // Function to set size of JFrame.
+        setTitle("Survey");
+        setSize(new Dimension(400, 400));
+        setLocationRelativeTo(null);
+        
+
+        // Function to set visibility of JFrame.
+        setVisible(true);
+
+        // Function to set default operation of JFrame.
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         // to get the content
         c = getContentPane();
@@ -29,7 +41,11 @@ public class Survey extends JFrame implements ActionListener {
 
         // set the layout
         c.setLayout(card);
+
+        
         incomePanel = new IncomePanel();
+        incomePanel.setPreferredSize(new Dimension(400,400));
+        incomePanel.requestFocus();
         incomePanel.incomeTextField.setEditable(true);
         incomePanel.next.addActionListener(this);
 
@@ -42,6 +58,8 @@ public class Survey extends JFrame implements ActionListener {
         contributionAmount = new ContributionAmount();
         contributionAmount.contributionAmount.setEditable(true);
         contributionAmount.next.addActionListener(this);
+
+       
 
 
 
@@ -74,20 +92,5 @@ public class Survey extends JFrame implements ActionListener {
 
     }
 
-    // Main Method
-    public static void main(String[] args)
-    {
 
-        // Creating Object of CardLayout class.
-        Survey cl = new Survey();
-
-        // Function to set size of JFrame.
-        cl.setSize(400, 400);
-
-        // Function to set visibility of JFrame.
-        cl.setVisible(true);
-
-        // Function to set default operation of JFrame.
-        cl.setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
 }
